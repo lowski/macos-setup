@@ -1,0 +1,6 @@
+.history
+.lh
+*.pem*
+*secret
+*.env*
+
