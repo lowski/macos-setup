@@ -1,0 +1,7 @@
+---
+- name: Configure macOS development machine
+  hosts: local
+  connection: local
+  gather_facts: true
+  roles:
+    - shell

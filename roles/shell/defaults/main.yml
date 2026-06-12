@@ -1,0 +1,20 @@
+---
+# Packages that make up the shell experience.
+shell_formulae:
+  - fish     # the shell itself
+  - eza      # `ls`/`lls` replacement (see functions)
+  - zoxide   # smarter `cd`, wired in via the fisher plugin below
+
+shell_casks:
+  - ghostty  # terminal emulator
+
+# fisher plugins — the source of truth for ~/.config/fish/fish_plugins.
+shell_fisher_plugins:
+  - jorgebucaran/fisher
+  - icezyclon/zoxide.fish
+
+# Make fish the *login* shell via chsh. Not needed in normal use: ghostty
+# launches fish directly (see the `command` directive in ghostty.config.j2),
+# so the login shell stays zsh. Flip to true to also chsh; that path requires
+# running the playbook with --ask-become-pass.
+shell_set_default: false

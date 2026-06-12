@@ -1,0 +1,6 @@
+---
+# Sync installed plugins to match ~/.config/fish/fish_plugins. Runs only when
+# the plugin list changed or fisher was just bootstrapped (notified).
+- name: Sync fisher plugins
+  ansible.builtin.command:
+    cmd: "{{ shell_brew_prefix.stdout }}/bin/fish -c 'fisher update'"

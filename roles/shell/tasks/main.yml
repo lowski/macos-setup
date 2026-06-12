@@ -1,0 +1,88 @@
+---
+- name: Install shell tooling
+  community.general.homebrew:
+    name: "{{ shell_formulae }}"
+    state: present
+
+- name: Install terminal emulator
+  community.general.homebrew_cask:
+    name: "{{ shell_casks }}"
+    state: present
+
+- name: Determine Homebrew prefix
+  ansible.builtin.command: brew --prefix
+  register: shell_brew_prefix
+  changed_when: false
+
+- name: Ensure fish config directories exist
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/fish/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - ""
+    - functions
+
+- name: Deploy fish config and custom functions
+  ansible.builtin.copy:
+    src: "fish/{{ item }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/fish/{{ item }}"
+    mode: "0644"
+  loop:
+    - config.fish
+    - functions/fish_prompt.fish
+    - functions/dev.fish
+    - functions/lls.fish
+    - functions/ls.fish
+
+- name: Declare fisher plugins
+  ansible.builtin.template:
+    src: fish_plugins.j2
+    dest: "{{ ansible_facts['user_dir'] }}/.config/fish/fish_plugins"
+    mode: "0644"
+  notify: Sync fisher plugins
+
+- name: Check whether fisher is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.config/fish/functions/fisher.fish"
+  register: shell_fisher
+
+- name: Bootstrap fisher
+  ansible.builtin.shell:
+    cmd: >
+      curl -fsSL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
+      | source && fisher install jorgebucaran/fisher
+    executable: "{{ shell_brew_prefix.stdout }}/bin/fish"
+  when: not shell_fisher.stat.exists
+  notify: Sync fisher plugins
+
+# --- Ghostty -----------------------------------------------------------------
+
+- name: Ensure ghostty config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/ghostty"
+    state: directory
+    mode: "0755"
+
+- name: Deploy ghostty config
+  ansible.builtin.template:
+    src: ghostty.config.j2
+    dest: "{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
+    mode: "0644"
+
+# --- Default login shell (factory default is zsh; off by default) -----------
+
+- name: Register fish as an allowed login shell
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ shell_brew_prefix.stdout }}/bin/fish"
+    state: present
+  become: true
+  when: shell_set_default
+
+- name: Set fish as the default login shell
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    shell: "{{ shell_brew_prefix.stdout }}/bin/fish"
+  become: true
+  when: shell_set_default
