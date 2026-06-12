@@ -1,0 +1,147 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "alt+left",
+        "command": "cursorWordPartLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorWordPartRight",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+right",
+        "command": "cursorWordPartRightSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "cursorWordPartLeftSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "cmd+g left",
+        "command": "gitlens.diffWithPrevious"
+    },
+    {
+        "key": "cmd+g right",
+        "command": "gitlens.diffWithNext"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+cmd+k",
+        "command": "-editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "-deleteAllLeft",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+enter",
+        "command": "editor.action.quickFix",
+        "when": "editorHasCodeActionsProvider && textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+enter",
+        "command": "-notebook.cell.executeAndInsertBelow",
+        "when": "notebookCellListFocused && notebookCellType == 'markup' || notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
+    },
+    {
+        "key": "cmd+g s",
+        "command": "git.stageSelectedRanges",
+    },
+    {
+        "key": "cmd+g z",
+        "command": "git.revertSelectedRanges",
+    },
+    {
+        "key": "cmd+g u",
+        "command": "git.unstageSelectedRanges",
+    },
+    {
+        "key": "cmd+g f",
+        "command": "git.openFile"
+    },
+    {
+        "key": "alt+q",
+        "command": "editor.emmet.action.removeTag"
+    },
+    {
+        "key": "alt+w",
+        "command": "editor.emmet.action.wrapWithAbbreviation"
+    },
+    {
+        "key": "cmd+]",
+        "command": "workbench.action.navigateForward",
+        "when": "canNavigateForward"
+    },
+    {
+        "key": "cmd+]",
+        "command": "-editor.action.indentLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+]",
+        "command": "-composer.nextChatTab",
+        "when": "composerFocused && !editorTextFocus"
+    },
+    {
+        "key": "cmd+]",
+        "command": "-glass.agentNavigateForward",
+        "when": "glassNoModalOpen && isGlassEmptyWorkspace && !terminalFocusInAny && glassActiveTabKind != 'file'"
+    },
+    {
+        "key": "cmd+[",
+        "command": "workbench.action.navigateBack",
+        "when": "canNavigateBack"
+    },
+    {
+        "key": "cmd+[",
+        "command": "-editor.action.outdentLines",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+[",
+        "command": "-composer.previousChatTab",
+        "when": "composerFocused && !editorTextFocus"
+    },
+    {
+        "key": "cmd+[",
+        "command": "-glass.agentNavigateBack",
+        "when": "glassNoModalOpen && isGlassEmptyWorkspace && !terminalFocusInAny && glassActiveTabKind != 'file'"
+    },
+    {
+        "key": "cmd+1",
+        "command": "workbench.explorer.fileView.focus"
+    },
+    {
+        "key": "cmd+3",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "cmd+e",
+        "command": "workbench.files.action.showActiveFileInExplorer"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-actions.findWithSelection"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-cursor.toggleAgentWindowIDEUnification",
+        "when": "!isGlass && workbenchState != 'empty'"
+    },
+    {
+        "key": "cmd+e",
+        "command": "-editor.action.toggleScreenReaderAccessibilityMode",
+        "when": "accessibilityHelpIsShown"
+    }
+]

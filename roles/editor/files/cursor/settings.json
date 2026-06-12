@@ -1,0 +1,255 @@
+{
+  "editor.suggestSelection": "first",
+  "python.languageServer": "None",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [
+      80
+    ],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+  },
+  "dart.debugSdkLibraries": false,
+  "[latex]": {
+    "editor.formatOnPaste": false,
+    "editor.suggestSelection": "recentlyUsedByPrefix"
+  },
+  "editor.wordWrap": "bounded",
+  "workbench.tree.indent": 20,
+  "git.enableSmartCommit": true,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook",
+    "*.epub": "default"
+  },
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "editor.fontFamily": "FiraCode Nerd Font, Menlo, Monaco, 'Courier New', monospace",
+  "workbench.startupEditor": "none",
+  "redhat.telemetry.enabled": false,
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.factorypath": true,
+    "**/.project": true,
+    "**/.settings": true
+  },
+  "gitlens.views.commits.avatars": false,
+  "gitlens.views.commits.showBranchComparison": false,
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "git.confirmSync": false,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
+  },
+  "editor.foldingImportsByDefault": true,
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font",
+  "terminal.integrated.customGlyphs": false,
+  "git.autofetch": true,
+  "dart.showInspectorNotificationsForWidgetErrors": false,
+  "dart.debugExternalPackageLibraries": false,
+  "explorer.autoReveal": false,
+  "search.exclude": {
+    "**/.history": true,
+    "**/build": true,
+    "**/DevelopmentTools/**": true
+  },
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.fontSize": 13,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 100
+  },
+  "git.openRepositoryInParentFolders": "never",
+  "material-icon-theme.activeIconPack": "angular",
+  "editor.accessibilitySupport": "on",
+  "editor.suggest.showWords": false,
+  "zenMode.showTabs": "none",
+  "workbench.layoutControl.enabled": false,
+  "window.commandCenter": false,
+  "workbench.preferredDarkColorTheme": "Atom One Dark",
+  "workbench.preferredLightColorTheme": "Atom One Light",
+  "emmet.includeLanguages": {
+    "nunjucks": "html",
+    "njk": "html"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.productIconTheme": "material-product-icons",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.tabSize": 2
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.tabSize": 2
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "diffEditor.ignoreTrimWhitespace": true,
+  "editor.wrappingIndent": "indent",
+  "editor.wordWrapColumn": 140,
+  "workbench.colorTheme": "Atom One Dark",
+  "editor.minimap.enabled": false,
+  "tailwind-fold.autoFold": false,
+  "playwright.reuseBrowser": false,
+  "playwright.pickLocatorCopyToClipboard": true,
+  "githubPullRequests.pullBranch": "never",
+  "cursor.cpp.disabledLanguages": [
+    "plaintext",
+    "properties",
+    "terraform-vars",
+    "shellscript",
+    "python",
+    "untitled"
+  ],
+  "diffEditor.renderSideBySide": true,
+  "git.blame.editorDecoration.enabled": false,
+  "local-history.commits.patchDelay": 60,
+  "workbench.localHistory.maxFileEntries": 500,
+  "accessibility.signals.voiceRecordingStarted": {
+    "sound": "off"
+  },
+  "accessibility.signals.lineHasBreakpoint": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.chatEditModifiedFile": {
+    "sound": "off"
+  },
+  "accessibility.signals.chatRequestSent": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.chatResponseReceived": {
+    "sound": "off"
+  },
+  "accessibility.signals.clear": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.codeActionApplied": {
+    "sound": "off"
+  },
+  "accessibility.signals.codeActionTriggered": {
+    "sound": "off"
+  },
+  "accessibility.signals.onDebugBreak": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.diffLineDeleted": {
+    "sound": "off"
+  },
+  "accessibility.signals.diffLineInserted": {
+    "sound": "off"
+  },
+  "accessibility.signals.diffLineModified": {
+    "sound": "off"
+  },
+  "accessibility.signals.editsKept": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.positionHasError": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.lineHasError": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.lineHasFoldedArea": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.lineHasInlineSuggestion": {
+    "sound": "off"
+  },
+  "accessibility.signals.noInlayHints": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.notebookCellCompleted": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.notebookCellFailed": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.progress": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.taskCompleted": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.taskFailed": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.terminalBell": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.terminalCommandFailed": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.terminalCommandSucceeded": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.terminalQuickFix": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.editsUndone": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.voiceRecordingStopped": {
+    "sound": "off"
+  },
+  "accessibility.signals.positionHasWarning": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "accessibility.signals.lineHasWarning": {
+    "sound": "off",
+    "announcement": "auto"
+  },
+  "claudeCode.preferredLocation": "panel",
+  "biome.suggestInstallingGlobally": false,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "window.autoDetectColorScheme": false,
+}

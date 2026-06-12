@@ -1,0 +1,24 @@
+---
+# GUI editors. Both are available as Homebrew casks.
+editor_casks:
+  - cursor
+  - zed
+
+# Claude Code installs via its official script (self-updating); the native
+# installer drops the CLI here.
+editor_claude_bin: "{{ ansible_facts['user_dir'] }}/.local/bin/claude"
+
+# Where Cursor keeps user config, and the CLI shipped inside the app bundle
+# (the cask also links a `cursor` binary, but the bundled path is deterministic).
+editor_cursor_user_dir: "{{ ansible_facts['user_dir'] }}/Library/Application Support/Cursor/User"
+editor_cursor_bin: "/Applications/Cursor.app/Contents/Resources/app/bin/cursor"
+
+# Cursor config files synced in both directions (install pushes them out;
+# `--tags capture` pulls the live versions back in).
+editor_cursor_files:
+  - settings.json
+  - keybindings.json
+
+# The extension list lives in files/cursor/extensions.txt (raw
+# `cursor --list-extensions` output), shared by install and capture so there is
+# a single source of truth. Refresh it with: ansible-playbook site.yml --tags capture

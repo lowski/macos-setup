@@ -6,3 +6,4 @@
   roles:
     - utilities
     - shell
+    - editor

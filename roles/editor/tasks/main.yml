@@ -1,0 +1,102 @@
+---
+- name: Install editors
+  block:
+    - name: Install editors via Homebrew
+      community.general.homebrew_cask:
+        name: "{{ editor_casks }}"
+        state: present
+  rescue:
+    # Homebrew refuses to install over an app it didn't place in /Applications
+    # (e.g. an editor installed manually). Surface a clear fix instead of the
+    # raw error: remove the conflicting .app and re-run.
+    - name: Explain how to resolve a pre-existing app conflict
+      ansible.builtin.fail:
+        msg: >-
+          Homebrew can't install over an app it didn't place in /Applications.
+          Delete the conflicting app bundle (e.g. rm -rf /Applications/Cursor.app)
+          and re-run the playbook. Original error: {{ ansible_failed_result.msg }}
+
+# --- Claude Code -------------------------------------------------------------
+# Installed via the official script rather than a cask: it self-updates, so the
+# playbook only needs to install it when absent. `creates` keeps this idempotent.
+- name: Install Claude Code via the official installer
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://claude.ai/install.sh | bash
+    creates: "{{ editor_claude_bin }}"
+
+# --- Cursor config (repo -> machine) -----------------------------------------
+# Cursor is a VS Code fork; user config lives in the "User" support dir.
+
+- name: Ensure Cursor user config directory exists
+  ansible.builtin.file:
+    path: "{{ editor_cursor_user_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Deploy Cursor settings and keybindings
+  ansible.builtin.copy:
+    src: "cursor/{{ item }}"
+    dest: "{{ editor_cursor_user_dir }}/{{ item }}"
+    mode: "0644"
+  loop: "{{ editor_cursor_files }}"
+
+# --- Cursor extensions (repo -> machine) -------------------------------------
+# Source of truth is files/cursor/extensions.txt. Only install the ones not
+# already present so re-runs report no change.
+
+- name: Load tracked Cursor extension list
+  ansible.builtin.set_fact:
+    editor_cursor_extensions: >-
+      {{ lookup('file', role_path ~ '/files/cursor/extensions.txt').splitlines()
+         | map('trim') | select | list }}
+
+- name: List installed Cursor extensions
+  ansible.builtin.command: "{{ editor_cursor_bin }} --list-extensions"
+  register: editor_installed_extensions
+  changed_when: false
+
+- name: Install missing Cursor extensions
+  ansible.builtin.command: "{{ editor_cursor_bin }} --install-extension {{ item }}"
+  loop: "{{ editor_cursor_extensions }}"
+  when: item | lower not in (editor_installed_extensions.stdout_lines | map('lower') | list)
+  register: editor_ext_install
+  changed_when: editor_ext_install.rc == 0
+  # Tolerate extensions that aren't on Cursor's registry (Open VSX); still fail
+  # on real errors (network, bad CLI invocation, etc.).
+  failed_when: editor_ext_install.rc != 0 and 'not found' not in editor_ext_install.stderr
+
+- name: Report extensions unavailable in Cursor's marketplace
+  ansible.builtin.debug:
+    msg: >-
+      Skipped (not on Cursor's Open VSX registry): {{ editor_ext_unavailable | join(', ') }}
+  vars:
+    editor_ext_unavailable: >-
+      {{ editor_ext_install.results
+         | selectattr('rc', 'defined') | selectattr('rc', 'ne', 0)
+         | map(attribute='item') | list }}
+  when: editor_ext_unavailable | length > 0
+
+# --- Capture (machine -> repo) -----------------------------------------------
+# Pull the live config back into the repo. Tagged `never`, so it is skipped on a
+# normal run and only fires with: ansible-playbook site.yml --tags capture
+- name: Capture current Cursor config back into the repo
+  tags: [capture, never]
+  block:
+    - name: Dump installed Cursor extensions
+      ansible.builtin.command: "{{ editor_cursor_bin }} --list-extensions"
+      register: editor_dump_extensions
+      changed_when: false
+
+    - name: Write extension list into the repo
+      ansible.builtin.copy:
+        content: "{{ editor_dump_extensions.stdout }}\n"
+        dest: "{{ role_path }}/files/cursor/extensions.txt"
+        mode: "0644"
+
+    - name: Pull live Cursor settings and keybindings into the repo
+      ansible.builtin.copy:
+        src: "{{ editor_cursor_user_dir }}/{{ item }}"
+        dest: "{{ role_path }}/files/cursor/{{ item }}"
+        mode: "0644"
+        remote_src: true
+      loop: "{{ editor_cursor_files }}"
