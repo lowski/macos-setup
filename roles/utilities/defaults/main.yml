@@ -1,0 +1,16 @@
+---
+# General-purpose macOS utilities.
+
+# Available as Homebrew casks.
+# 1Password 8 is distributed only as a cask (no longer on the Mac App Store).
+utilities_casks:
+  - raycast
+  - 1password
+  - 1password-cli
+
+# Mac App Store apps, keyed by name with their numeric App Store ID.
+# Installed via `mas`, which requires being signed in to the App Store.
+# Find IDs with: mas search <name>
+utilities_mas_apps:
+  - name: Magnet
+    id: 441258766
