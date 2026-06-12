@@ -1,0 +1,30 @@
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[rebase]
+	autosquash = true
+
+[core]
+	autocrlf = input
+
+[alias]
+	s = switch
+	st = status
+	c = commit
+	ca = commit --amend
+	can = commit --amend --no-edit
+	p = push
+	pf = push --force-with-lease
+	pt = push --tags
+	lone = log --oneline
+	ria = rebase --interactive --autosquash
+	ra = rebase --abort
+	rc = rebase --continue
+	smu = submodule update
+	pulla = pull --autostash

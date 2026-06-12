@@ -1,0 +1,16 @@
+---
+- name: Install git and the GitHub CLI
+  community.general.homebrew:
+    name: "{{ git_formulae }}"
+    state: present
+
+# We only manage the marked block in ~/.gitconfig. Identity and any ad-hoc
+# `git config --global` settings live outside it and survive reruns untouched —
+# blockinfile only ever rewrites what's between its own markers.
+- name: Manage git settings in ~/.gitconfig
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts['user_dir'] }}/.gitconfig"
+    create: true
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED — git role"
+    block: "{{ lookup('file', '.gitconfig') }}"

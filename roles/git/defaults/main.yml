@@ -1,0 +1,14 @@
+---
+# Version control: git itself, the GitHub CLI, and a managed block in ~/.gitconfig.
+
+# git ships with the Xcode CLT, but pin the Homebrew build so we control the
+# version and get updates via `brew upgrade`. gh is the GitHub workflow client.
+# (gh is not wired into gitconfig — git auth goes through the SSH agent.)
+git_formulae:
+  - git
+  - gh
+
+# The actual git settings live in files/managed-block (sensible, portable
+# defaults + aliases). Identity (user.name / user.email) is intentionally not
+# managed — that's per-person, set it yourself with
+# `git config --global user.name/.email`.

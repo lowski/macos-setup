@@ -6,5 +6,6 @@
   roles:
     - utilities
     - shell
+    - git
     - editor
     - productivity
