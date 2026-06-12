@@ -1,0 +1,22 @@
+---
+- name: Install productivity casks
+  community.general.homebrew_cask:
+    name: "{{ productivity_casks }}"
+    state: present
+
+# --- Mac App Store apps ------------------------------------------------------
+# `mas` drives the App Store CLI; the apps below must be purchased/free on the
+# signed-in Apple ID for `mas install` to succeed.
+
+- name: Install mas (Mac App Store CLI)
+  community.general.homebrew:
+    name: mas
+    state: present
+
+- name: Install Mac App Store apps
+  community.general.mas:
+    id: "{{ item.id }}"
+    state: present
+  loop: "{{ productivity_mas_apps }}"
+  loop_control:
+    label: "{{ item.name }}"

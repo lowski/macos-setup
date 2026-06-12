@@ -1,0 +1,16 @@
+---
+# Productivity and communication apps.
+
+# Available as Homebrew casks.
+# Superhuman is not on the Mac App Store, so the cask is the only managed option.
+productivity_casks:
+  - superhuman
+
+# Mac App Store apps, keyed by name with their numeric App Store ID.
+# Installed via `mas`, which requires being signed in to the App Store.
+# Preferred over casks where available: App Store builds are Apple-notarized and
+# vendor-signed, a stronger trust chain than a community-maintained cask recipe.
+# Find IDs with: mas search <name>
+productivity_mas_apps:
+  - name: Slack
+    id: 803453959
