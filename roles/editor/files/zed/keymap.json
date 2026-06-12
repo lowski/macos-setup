@@ -1,0 +1,50 @@
+// Zed keymap — mirrors roles/editor/files/cursor/keybindings.json.
+// Zed uses a different format; mappings target the closest native action.
+[
+  {
+    "context": "Editor",
+    "use_key_equivalents": true,
+    "bindings": {
+      "alt-left": "editor::MoveToPreviousSubwordStart",
+      "alt-right": "editor::MoveToNextSubwordEnd",
+      "shift-alt-left": "editor::SelectToPreviousSubwordStart",
+      "shift-alt-right": "editor::SelectToNextSubwordEnd",
+      "cmd-backspace": "editor::DeleteLine",
+      "alt-enter": "editor::ToggleCodeActions",
+      "cmd-[": "pane::GoBack",
+      "cmd-]": "pane::GoForward",
+      "cmd-e": "pane::RevealInProjectPanel",
+      "alt-w": "editor::WrapSelectionsInTag"
+    },
+    "unbind": {
+      "cmd-backspace": "editor::DeleteToBeginningOfLine",
+      "cmd-shift-k": "editor::DeleteLine",
+      "cmd-[": "editor::Outdent",
+      "cmd-]": "editor::Indent",
+      "cmd-e": "buffer_search::UseSelectionForFind"
+    }
+  },
+  {
+    "context": "Workspace",
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-1": "project_panel::ToggleFocus",
+      "cmd-3": "git_panel::ToggleFocus"
+    },
+    "unbind": {
+      "cmd-1": ["workspace::ActivatePane", 0],
+      "cmd-3": ["workspace::ActivatePane", 2]
+    }
+  },
+  {
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-g left": "editor::GoToPreviousHunk",
+      "cmd-g right": "editor::GoToHunk",
+      "cmd-g s": "git::StageRange",
+      "cmd-g z": "git::Restore",
+      "cmd-g u": "git::ToggleStaged",
+      "cmd-g f": "git_panel::FocusEditor"
+    }
+  }
+]

@@ -40,6 +40,21 @@
     mode: "0644"
   loop: "{{ editor_cursor_files }}"
 
+# --- Zed keymap (repo -> machine) --------------------------------------------
+
+- name: Ensure Zed config directory exists
+  ansible.builtin.file:
+    path: "{{ editor_zed_config_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Deploy Zed keymap
+  ansible.builtin.copy:
+    src: "zed/{{ item }}"
+    dest: "{{ editor_zed_config_dir }}/{{ item }}"
+    mode: "0644"
+  loop: "{{ editor_zed_files }}"
+
 # --- Cursor extensions (repo -> machine) -------------------------------------
 # Source of truth is files/cursor/extensions.txt. Only install the ones not
 # already present so re-runs report no change.
