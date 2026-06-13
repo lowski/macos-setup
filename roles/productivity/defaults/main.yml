@@ -2,9 +2,9 @@
 # Productivity and communication apps.
 
 # Available as Homebrew casks.
-# Superhuman is not on the Mac App Store, so the cask is the only managed option.
 productivity_casks:
   - superhuman
+  - linear
 
 # Mac App Store apps, keyed by name with their numeric App Store ID.
 # Installed via `mas`, which requires being signed in to the App Store.
