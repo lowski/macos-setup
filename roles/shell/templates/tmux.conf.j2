@@ -1,0 +1,85 @@
+# Managed by Ansible (roles/shell). Edit the template, not this file.
+
+# --- Shell -------------------------------------------------------------------
+# Run fish inside tmux. Ghostty already launches fish (see ghostty.config.j2);
+# this makes new panes/windows use it too, regardless of the login shell.
+set -g default-shell {{ shell_brew_prefix.stdout }}/bin/fish
+set -g default-command {{ shell_brew_prefix.stdout }}/bin/fish
+
+# --- Colors / Ghostty --------------------------------------------------------
+# tmux-256color is the correct inner TERM; tell tmux the outer terminal is
+# truecolor-capable so 24-bit color passes through cleanly under Ghostty.
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ",xterm-ghostty:RGB"
+set -ga terminal-overrides ",*256col*:RGB"
+
+# --- Sensible defaults -------------------------------------------------------
+set -g mouse on                 # scroll, select panes, resize with the mouse
+set -g history-limit 50000      # generous scrollback
+set -sg escape-time 10          # no lag for vi/fish escape sequences
+set -g focus-events on          # let apps know when a pane gains focus
+set -g base-index 1             # windows start at 1, not 0
+setw -g pane-base-index 1       # panes too
+set -g renumber-windows on      # keep window numbers gap-free
+set -g set-clipboard on         # integrate with the system clipboard (OSC 52)
+setw -g mode-keys vi            # vi keybindings in copy mode
+
+# --- Key bindings ------------------------------------------------------------
+# Use C-a as the primary prefix, keeping the default C-b as a fallback. Press
+# C-a twice to send a literal C-a through to the running program.
+set -g prefix C-a
+set -g prefix2 C-b
+bind C-a send-prefix
+
+# Intuitive splits that keep the current working directory.
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+unbind '"'
+unbind %
+
+# Vim-style pane navigation.
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Reload this config without restarting tmux.
+bind r source-file ~/.config/tmux/tmux.conf \; display "tmux.conf reloaded"
+
+# --- Status bar --------------------------------------------------------------
+# Minimal, modern look — no plugins. Palette is Catppuccin Mocha so it sits
+# nicely on a dark Ghostty background.
+
+# Colors
+%hidden bg="#1e1e2e"        # base
+%hidden fg="#cdd6f4"        # text
+%hidden muted="#6c7086"     # overlay0
+%hidden accent="#89b4fa"    # blue
+%hidden surface="#313244"   # surface0
+
+set -g status-position top
+set -g status-interval 5
+set -g status-justify left
+set -g status-style "bg=$bg,fg=$fg"
+
+# Left: session name in an accent pill.
+set -g status-left-length 40
+set -g status-left "#[bg=$accent,fg=$bg,bold] #S #[bg=$bg,fg=$bg] "
+
+# Right: live system stats (CPU / MEM / GPU / DISK) via helper script.
+set -g status-right-length 80
+set -g status-right "#({{ ansible_facts['user_dir'] }}/.config/tmux/sysstat.sh) "
+
+# Windows: current one highlighted, others muted.
+set -g window-status-separator ""
+set -g window-status-format "#[fg=$muted] #I:#W "
+set -g window-status-current-format "#[bg=$surface,fg=$fg,bold] #I:#W "
+setw -g window-status-activity-style "fg=$accent"
+
+# Panes, messages, and copy-mode.
+set -g pane-border-style "fg=$surface"
+set -g pane-active-border-style "fg=$accent"
+set -g message-style "bg=$surface,fg=$fg"
+set -g mode-style "bg=$accent,fg=$bg"
+
+bind-key "k" display-popup -h 90% -w 50% -E "sesh picker -i"

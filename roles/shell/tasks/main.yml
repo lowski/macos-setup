@@ -70,6 +70,26 @@
     dest: "{{ ansible_facts['user_dir'] }}/.config/ghostty/config"
     mode: "0644"
 
+# --- tmux --------------------------------------------------------------------
+
+- name: Ensure tmux config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/tmux"
+    state: directory
+    mode: "0755"
+
+- name: Deploy tmux config
+  ansible.builtin.template:
+    src: tmux.conf.j2
+    dest: "{{ ansible_facts['user_dir'] }}/.config/tmux/tmux.conf"
+    mode: "0644"
+
+- name: Deploy tmux status-bar stats helper
+  ansible.builtin.copy:
+    src: tmux/sysstat.sh
+    dest: "{{ ansible_facts['user_dir'] }}/.config/tmux/sysstat.sh"
+    mode: "0755"
+
 # --- Default login shell (factory default is zsh; off by default) -----------
 
 - name: Register fish as an allowed login shell
