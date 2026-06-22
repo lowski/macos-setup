@@ -7,6 +7,7 @@ utilities_casks:
   - raycast
   - 1password
   - 1password-cli
+  - tableplus
 
 # Mac App Store apps, keyed by name with their numeric App Store ID.
 # Installed via `mas`, which requires being signed in to the App Store.
