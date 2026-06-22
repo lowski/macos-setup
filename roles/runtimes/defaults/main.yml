@@ -1,0 +1,21 @@
+---
+# Language runtimes and toolchains, installed via Homebrew.
+
+# Pick which languages you want runtimes for. Each entry must be a key in
+# `runtimes_packages` below. Edit this list to add/remove languages.
+runtimes_languages:
+  - javascript
+  - go
+
+# Map of language -> Homebrew formulae that provide its runtime/toolchain.
+# Add a language here (and reference it in `runtimes_languages`) to install it.
+runtimes_packages:
+  javascript:
+    - bun     # runtime, bundler, test runner, and package manager
+  python:
+    - python
+    - pipx
+  go:
+    - go
+  rust:
+    - rustup

@@ -1,0 +1,18 @@
+---
+# Flatten the selected languages into a single list of formulae. Selecting a
+# language not present in `runtimes_packages` is a configuration error — fail
+# loudly rather than silently installing nothing.
+- name: Validate selected languages are known
+  ansible.builtin.fail:
+    msg: >-
+      Unknown language(s) in runtimes_languages: {{ runtimes_unknown | join(', ') }}.
+      Known languages: {{ runtimes_packages.keys() | list | join(', ') }}.
+  vars:
+    runtimes_unknown: "{{ runtimes_languages | difference(runtimes_packages.keys() | list) }}"
+  when: runtimes_unknown | length > 0
+
+- name: Install runtimes for the selected languages
+  community.general.homebrew:
+    name: "{{ runtimes_languages | map('extract', runtimes_packages) | flatten }}"
+    state: present
+  when: runtimes_languages | length > 0
