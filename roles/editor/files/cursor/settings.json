@@ -15,7 +15,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
       "source.organizeImports": "explicit"
-    },
+    }
   },
   "dart.debugSdkLibraries": false,
   "[latex]": {
@@ -58,8 +58,7 @@
   "git.confirmSync": false,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always"
+    "source.fixAll": "always"
   },
   "editor.foldingImportsByDefault": true,
   "[xml]": {
