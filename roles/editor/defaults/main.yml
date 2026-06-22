@@ -27,3 +27,9 @@ editor_zed_files:
 # The extension list lives in files/cursor/extensions.txt (raw
 # `cursor --list-extensions` output), shared by install and capture so there is
 # a single source of truth. Refresh it with: ansible-playbook site.yml --tags capture
+
+# macOS shortcuts that conflict with editor keybindings (Ctrl+Space is used for
+# autocomplete in VS Code/Cursor). System Settings > Keyboard > Keyboard Shortcuts > Input Sources
+editor_disabled_symbolic_hotkeys:
+  - id: 60
+    name: Select the previous input source (Ctrl+Space)

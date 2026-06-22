@@ -91,6 +91,35 @@
          | map(attribute='item') | list }}
   when: editor_ext_unavailable | length > 0
 
+# --- macOS keyboard shortcuts ------------------------------------------------
+# Ctrl+Space is the default macOS input-source switcher but conflicts with
+# editor autocomplete; disable it before deploying editor config.
+
+- name: Check disabled symbolic hotkey state
+  ansible.builtin.command:
+    cmd: >
+      plutil -extract AppleSymbolicHotKeys.{{ item.id }}.enabled raw
+      "{{ ansible_facts['user_dir'] }}/Library/Preferences/com.apple.symbolichotkeys.plist"
+  loop: "{{ editor_disabled_symbolic_hotkeys }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: editor_hotkey_state
+  changed_when: false
+  failed_when: false
+
+- name: Disable symbolic hotkeys
+  ansible.builtin.command:
+    cmd: >
+      defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys
+      -dict-add {{ item.item.id }} "<dict><key>enabled</key><false/></dict>"
+  loop: "{{ editor_hotkey_state.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: >
+    item.rc != 0 or
+    (item.stdout | default('') | trim | lower) not in ['0', 'false', 'no']
+  notify: Apply macOS preference changes
+
 # --- Capture (machine -> repo) -----------------------------------------------
 # Pull the live config back into the repo. Tagged `never`, so it is skipped on a
 # normal run and only fires with: ansible-playbook site.yml --tags capture
