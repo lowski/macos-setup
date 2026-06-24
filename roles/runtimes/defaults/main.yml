@@ -9,6 +9,7 @@ runtimes_languages:
 
 # Map of language -> Homebrew formulae that provide its runtime/toolchain.
 # Add a language here (and reference it in `runtimes_languages`) to install it.
+# NOTE: Ruby is deliberately NOT here — it's handled below via mise, never brew.
 runtimes_packages:
   javascript:
     - bun     # runtime, bundler, test runner, and package manager
@@ -19,3 +20,18 @@ runtimes_packages:
     - go
   rust:
     - rustup
+
+# --- Ruby --------------------------------------------------------------------
+# Ruby is installed via mise (a version manager), NOT Homebrew. brew upgrades
+# Ruby and its C libraries out from under your compiled gems, which is the
+# classic source of "ffi/nokogiri/pg native extension" breakage.
+#
+# We use mise's PRECOMPILED Ruby binaries (ruby.compile = false). Those ship a
+# self-contained Ruby with OpenSSL, libyaml and readline statically bundled, so
+# the Ruby stdlib extensions that historically broke (openssl, psych, readline)
+# need no system libraries at all. If no prebuilt binary exists for a version,
+# mise transparently falls back to compiling from source via ruby-build.
+#
+# The version tracked is "latest" (latest stable); mise resolves it at install
+# time. The tools/settings themselves live in roles/runtimes/files/mise.toml.
+runtimes_ruby_enabled: true

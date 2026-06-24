@@ -16,3 +16,45 @@
     name: "{{ runtimes_languages | map('extract', runtimes_packages) | flatten }}"
     state: present
   when: runtimes_languages | length > 0
+
+# --- Ruby (via mise, never brew — see defaults/main.yml) ---------------------
+# mise's own commands are used (never a templated config file) because they
+# MERGE into ~/.config/mise/config.toml, so any tools/settings the user adds
+# later survive a re-run instead of being clobbered.
+
+- name: Install mise (manages Ruby)
+  community.general.homebrew:
+    name: mise
+    state: present
+  when: runtimes_ruby_enabled
+
+- name: Determine Homebrew prefix
+  ansible.builtin.command: brew --prefix
+  register: runtimes_brew_prefix
+  changed_when: false
+  when: runtimes_ruby_enabled
+
+- name: Check the mise ruby.compile setting
+  ansible.builtin.command: "{{ runtimes_brew_prefix.stdout }}/bin/mise settings get ruby.compile"
+  register: runtimes_ruby_compile
+  changed_when: false
+  failed_when: false   # exits non-zero when the setting is unset
+  when: runtimes_ruby_enabled
+
+- name: Configure mise to use precompiled Ruby binaries
+  ansible.builtin.command: "{{ runtimes_brew_prefix.stdout }}/bin/mise settings set ruby.compile false"
+  when:
+    - runtimes_ruby_enabled
+    - runtimes_ruby_compile.stdout | default('') | trim != 'false'
+
+- name: Check whether mise already manages Ruby
+  ansible.builtin.command: "{{ runtimes_brew_prefix.stdout }}/bin/mise ls --installed ruby"
+  register: runtimes_ruby_installed
+  changed_when: false
+  when: runtimes_ruby_enabled
+
+- name: Install latest stable Ruby via mise and set it as the global default
+  ansible.builtin.command: "{{ runtimes_brew_prefix.stdout }}/bin/mise use --global ruby@latest"
+  when:
+    - runtimes_ruby_enabled
+    - "'ruby' not in runtimes_ruby_installed.stdout | default('')"
