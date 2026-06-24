@@ -28,3 +28,4 @@
 	rc = rebase --continue
 	smu = submodule update
 	pulla = pull --autostash
+	fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf --layout=reverse | cut -c -7 | xargs -o git commit --fixup"
